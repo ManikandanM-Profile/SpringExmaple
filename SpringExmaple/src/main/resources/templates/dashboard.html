@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" type="text/css" href="css/dashboard.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script th:src="@{/script/dashboard.js}"></script>
+<script th:src="@{/script/jquery.min.js}"></script>
+</head>
+<body>
+
+	<!-- Navigation bar -->
+	<nav class="navbar">
+		<h2>My Dashboard</h2>
+
+		<div class="profile-dropdown">
+			<button class="profile-btn" onclick="toggleDropdown()">
+				<span class="bi bi-person-circle profile-icon"></span> <span>My Profile</span> <span
+					class="bi bi-chevron-down arrow"></span>
+			</button>
+
+			<div class="dropdown-menu" id="dropdownMenu">
+				<div class="dropdown-header">
+					<strong> Hi <span sec:authentication="name">Username</span>!
+					</strong> <small>Welcome back</small>
+				</div>
+
+				<div class="dropdown-divider"></div>
+
+				<!-- <a href="/profile" class="dropdown-item bi bi-person-vcard">View Profile </a> -->
+				<button type="button" class="dropdown-item" onclick="openProfileModal()"> <i class="bi bi-person-vcard"></i> View Profile </button>
+				<button type="button" class="dropdown-item" onclick="openRegisterModal()"> <i class="bi bi-person-plus"></i> Register </button>
+
+				<div class="dropdown-divider"></div>
+
+				<form th:action="@{/logout}" method="post">
+				    
+					<button type="submit" class="dropdown-item logout-item bi bi-box-arrow-right">
+						Logout</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Dashboard content -->
+	<div class="container">
+
+		<div class="welcome">
+			<h1>Welcome to Your Dashboard!</h1>
+			<p>Here is an overview of your application.</p>
+		</div>
+
+		<div class="dashboard-cards">
+			<div class="card">
+				<h3>Profile</h3>
+				<p>My Account</p>
+			</div>
+
+			<div class="card">
+				<h3>Reports</h3>
+				<p>View Reports</p>
+			</div>
+
+			<div class="card">
+				<h3>Settings</h3>
+				<p>Preferences</p>
+			</div>
+		</div>
+
+		<div class="main-card">
+			<h2>Dashboard Overview</h2>
+			<p>You have successfully logged in to your application. Use the
+				dashboard to access your account, reports, and settings. Click the
+				Logout button to securely end your session.</p>
+		</div>
+
+	</div>
+
+	<!-- Register Popup Modal -->
+<div class="modal-overlay" id="registerModal">
+    <div class="register-modal">
+
+        <div class="modal-header">
+            <div>
+                <h2>Create Account</h2>
+                <p>Enter your details to register</p>
+            </div>
+
+            <button type="button" class="close-btn"
+                onclick="closeRegisterModal()" aria-label="Close">
+                &times;
+            </button>
+        </div>
+
+        <p th:if="${error}" th:text="${error}"
+            class="error-message"></p>
+
+        <form id="registerForm">
+
+            <div class="form-grid">
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="regUsername">Username</label>
+                    <input type="text" id="regUsername"
+                        name="username"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        oninput="removeBorder('regUsername','usernameError');">
+
+                    <small class="error-message" id="usernameError"></small>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword"
+                        name="password"
+                        placeholder="Minimum 8 characters"
+                        autocomplete="new-password"
+                        oninput="removeBorder('regPassword','passwordError');">
+
+                    <small class="error-message" id="passwordError"></small>
+                </div>
+
+                <!-- Role -->
+                <div class="form-group">
+                    <label for="regRole">Role</label>
+
+                    <select id="regRole" name="role"
+                        onchange="removeBorder('regRole','roleError');">
+
+                        <option value="0">Select Role</option>
+                        <option value="1">User</option>
+                        <option value="2">Admin</option>
+
+                    </select>
+
+                    <small class="error-message" id="roleError"></small>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+
+                    <input type="text" id="regEmail"
+                        name="email"
+                        placeholder="Enter email address"
+                        autocomplete="email"
+                        oninput="removeBorder('regEmail','emailError');">
+
+                    <small class="error-message" id="emailError"></small>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group full-width">
+                    <label for="regPhoneNo">Phone Number</label>
+
+                    <input type="tel" id="regPhoneNo"
+                        name="phoneNo"
+                        placeholder="Enter phone number"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        inputmode="numeric"
+                        autocomplete="tel"
+                        title="Enter a 10-digit phone number"
+                        oninput="removeBorder('regPhoneNo','phoneError');">
+
+                    <small class="error-message" id="phoneError"></small>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="modal-actions">
+                <button type="button" class="register-btn"
+                    onclick="registerUser()">
+                    Save
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+	
+	<!-- Profile Modal -->
+	<div id="profileModal" class="modal-overlay">
+
+		<div class="register-modal profile-modal">
+
+			<div class="modal-header">
+				<h2>My Profile</h2>
+
+				<button type="button" class="close-btn"
+					onclick="closeProfileModal()">&times;</button>
+			</div>
+
+			<div class="profile-details">
+
+				<div class="profile-item">
+					<label>Username</label>
+					<p th:text="${profile.username}">Username</p>
+				</div>
+
+				<div class="profile-item">
+					<label>Email</label>
+					<p th:text="${profile.email}">Email</p>
+				</div>
+				<div class="profile-item">
+					<label>Role</label>
+					<p
+						th:text="${profile.role == 1 ? 'User' : (profile.role == 2 ? 'Admin' : 'Unknown')}">
+						User</p>
+				</div>
+				<div class="profile-item">
+					<label>Phone Number</label>
+					<p th:text="${profile.phoneNo}">Phone</p>
+				</div>
+			</div>
+
+			<div class="modal-actions">
+				<button type="button" class="cancel-btn"
+					onclick="closeProfileModal()">Close</button>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>
+

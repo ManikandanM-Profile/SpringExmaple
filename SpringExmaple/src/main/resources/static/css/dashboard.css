@@ -1,0 +1,522 @@
+@charset "UTF-8";
+
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+/* Navbar */
+.navbar {
+    background: #1e293b;
+    color: white;
+    padding: 18px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h2 {
+    font-size: 24px;
+}
+
+/* Logout button (standalone) */
+.logout-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+}
+
+/* Dashboard content */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #0f172a;
+}
+
+.welcome p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Dashboard cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid #3b82f6;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: #64748b;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+/* Main dashboard card */
+.main-card {
+    margin-top: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.main-card h2 {
+    margin-bottom: 12px;
+}
+
+.main-card p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+/* Profile dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #334155;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.profile-btn:hover {
+    background: #475569;
+}
+
+.profile-icon {
+    font-size: 20px;
+}
+
+.arrow {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 210px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Dropdown header */
+.dropdown-header {
+    padding: 16px;
+    color: #1e293b;
+}
+
+.dropdown-header strong,
+.dropdown-header small {
+    display: block;
+}
+
+.dropdown-header small {
+    margin-top: 5px;
+    color: #64748b;
+}
+
+/* Dropdown divider */
+.dropdown-divider {
+    height: 1px;
+    background: #e2e8f0;
+}
+
+/* Dropdown items and icons */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    color: #334155;
+    text-decoration: none;
+    text-align: left;
+    font-size: 14px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.dropdown-item i {
+    font-size: 16px;
+}
+
+.dropdown-item:hover {
+    background: #f1f5f9;
+}
+
+/* Dropdown logout */
+.dropdown-menu form {
+    margin: 0;
+}
+
+.logout-item {
+    color: #dc2626;
+    font-family: inherit;
+}
+
+.logout-item:hover {
+    background: #fef2f2;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .navbar {
+        padding: 16px;
+    }
+
+    .navbar h2 {
+        font-size: 20px;
+    }
+
+    .welcome h1 {
+        font-size: 25px;
+    }
+
+    .container {
+        margin-top: 25px;
+    }
+}
+
+
+/* Register popup overlay */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+/* Register Modal */
+.register-modal {
+    background: #ffffff;
+    width: 100%;
+    max-width: 650px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    animation: modalOpen 0.25s ease;
+}
+/* Two Column Form Layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 {
+    font-size: 23px;
+    color: #0f172a;
+    margin-bottom: 7px;
+}
+
+.modal-header p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #64748b;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #dc2626;
+}
+
+/* Form fields */
+/* Form Groups */
+.register-modal .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+/* Full Width Field */
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+/* Labels */
+.register-modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #374151;
+}
+/* Input Fields */
+.register-modal .form-group input,
+.register-modal .form-group select {
+    width: 100%;
+    height: 44px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* Focus Effect */
+.register-modal .form-group input:focus,
+.register-modal .form-group select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* Modal Buttons */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+
+    .register-modal {
+        max-width: 450px;
+        padding: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+
+}
+
+.cancel-btn,
+.register-btn {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.cancel-btn:hover {
+    background: #cbd5e1;
+}
+
+.register-modal .register-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.register-modal .register-btn:hover {
+    background: #1d4ed8;
+}
+
+/* Error Message */
+.register-modal .error-message {
+    display: none;
+    color: #dc2626;
+    font-size: 11px;
+    margin-top: 5px;
+    background: transparent;
+}
+/* Role Dropdown */
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+
+    /* Custom dropdown arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+}
+
+/* Focus Effect */
+.form-group select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* Dropdown Options */
+.form-group select option {
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* Label */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.profile-modal {
+    max-width: 450px;
+    width: 90%;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #1f2937;
+}
+
+.close-btn {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+    color: #6b7280;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-item {
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.profile-item label {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.profile-item p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #111827;
+    overflow-wrap: anywhere;
+}
